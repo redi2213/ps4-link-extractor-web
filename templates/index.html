@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>استخراج لینک PS4</title>
+</head>
+<body>
+    <h2>لینک صفحه بازی را وارد کن:</h2>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <form method="post">
+        <input type="url" name="url" placeholder="https://dlpsgame.com/..." style="width: 400px;" required>
+        <button type="submit">استخراج لینک‌ها</button>
+    </form>
+
+    {% if versions %}
+        <h3>نسخه‌های موجود:</h3>
+        <form method="post" action="/download">
+            <input type="hidden" name="url" value="{{ url }}">
+            {% for cusa, links in versions.items() %}
+                <input type="radio" id="{{ cusa }}" name="cusa" value="{{ cusa }}" required>
+                <label for="{{ cusa }}">{{ cusa }} ({{ links|length }} فایل)</label><br>
+            {% endfor %}
+            <button type="submit">دانلود لینک‌ها</button>
+        </form>
+    {% endif %}
+</body>
+</html>
